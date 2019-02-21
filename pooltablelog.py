@@ -28,14 +28,19 @@ def show_menu():
     print("Enter q to quit.")
 
 def rent_out_table(array):
-    selection = int(input("Please enter table number to rent: ")) - 1
-    table = array[selection]
-    if table.is_available():
-        table.rent_table()
-        time = table.start_time.strftime("%I:%M %p")
-        print(f"Table {table.number} rented out at {time}.")
-    else:
-        print(f"Pool Table {selection} has been occupied for {table.hours_rented()} hours and {table.min_rented()} minutes.\n")
+    try:
+        selection = int(input("Please enter table number to rent: ")) - 1
+        table = array[selection]
+        if table.is_available():
+            table.rent_table()
+            time = table.start_time.strftime("%I:%M %p")
+            print(f"Table {table.number} rented out at {time}.")
+        else:
+            print(f"Pool Table {selection} has been occupied for {table.hours_rented()} hours and {table.min_rented()} minutes.\n")
+    except ValueError:
+        print("Please enter a valid number when renting one.")
+    except:
+        print("Sorry, something terrible has happened. Please try another input.")
 
 def convert_objects(array, super):
     for i in range(0, len(array)):
@@ -62,3 +67,5 @@ while user_input != "q":
     elif user_input == "q":
         convert_objects(pooltables, pooltables_dictionaries)
         save_tables(pooltables_dictionaries)
+    else:
+        print("Please enter a valid input.")
