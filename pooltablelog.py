@@ -1,8 +1,9 @@
 import json
-from datetime import datetime, time
+from datetime import datetime, time, date
 from pool_table import PoolTable
 
 pooltables = []
+pooltables_dictionaries = []
 user_input = ""
 
 def add_12_tables(array):
@@ -34,16 +35,30 @@ def rent_out_table(array):
         time = table.start_time.strftime("%I:%M %p")
         print(f"Table {table.number} rented out at {time}.")
     else:
-        print(f"Pool Table {selection} is currently occupied.\n")
+        print(f"Pool Table {selection} has been occupied for {table.hours_rented()} hours and {table.min_rented()} minutes.\n")
+
+def convert_objects(array, super):
+    for i in range(0, len(array)):
+        table = array[i]
+        dict_table = table.to_dictionary()
+        super.append(dict_table)
+
+def save_tables(array):
+    date_today = date.today().strftime("%m-%d-%Y")
+    filename = f"{date_today}"
+    with open(filename, "w") as file_object:
+        json.dump(array, file_object)
 
 add_12_tables(pooltables)
-
 
 while user_input != "q":
     show_menu()
     user_input = input(">> ")
     if user_input == "1":
         show_tables(pooltables)
-    if user_input == "2":
+    elif user_input == "2":
         show_tables(pooltables)
         rent_out_table(pooltables)
+    elif user_input == "q":
+        convert_objects(pooltables, pooltables_dictionaries)
+        save_tables(pooltables_dictionaries)
