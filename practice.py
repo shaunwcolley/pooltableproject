@@ -21,21 +21,25 @@ a = date.today()
 date_today = a.strftime("%m-%d-%Y")
 filename = f"{date_today}"
 
-with open(filename) as file_object:
-  dictionaries = json.load(file_object)
+#with open(filename) as file_object:
+#  dictionaries = json.load(file_object)
+pooltables = []
+def add_12_tables(array):
+    for i in range(0,12):
+        table_number = i + 1
+        pooltable = PoolTable(table_number)
+        array.append(pooltable)
 
-def convert_to_object(array):
-    new_array = []
-    for item in array:
-        number = item["Number"]
-        table = PoolTable(number)
-        table.start_time = datetime.strptime(item["Start Date Time"], "%Y-%m-%d %H:%M:%S.%f")
-        table.end_time = datetime.strptime(item["End Date Time"], "%Y-%m-%d %H:%M:%S.%f")
-        table.total_minutes = float(item["Total Minutes Played"])
-        new_array.append(table)
-    return new_array
-array = convert_to_object(dictionaries)
-print(array[0].total_minutes)
+
+
+
+#add_12_tables(pooltables)
+pooltables = load_tables(pooltables)
+for item in pooltables:
+    print(item.number)
+
+
+
 
 #with open(filename) as file_object:
 #    if json.load(file_object)

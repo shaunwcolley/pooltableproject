@@ -6,7 +6,7 @@ class PoolTable:
         self.is_occupied = False
         self.start_time = datetime.now()
         self.end_time = datetime.now()
-        self.total_minutes = 10.0
+        self.total_minutes = 0.0
         self.times_played = 0
         self.cost = 0.0
 
@@ -18,8 +18,10 @@ class PoolTable:
     def close_table(self):
         self.is_occupied = False
         self.end_time = datetime.now()
-        self.cost()
+        self.cost_calc()
 
+    def reset_cost(self):
+        self.cost = 0
 
     def is_available(self):
         if self.is_occupied == True:
@@ -62,4 +64,5 @@ class PoolTable:
         "Start Date Time": str(self.start_time),
         "End Date Time": str(self.end_time),
         "Total Minutes Played": self.total_min_rented(),
+        "Status": self.is_occupied,
         "Total Cost": self.cost}
