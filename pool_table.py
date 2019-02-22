@@ -6,8 +6,9 @@ class PoolTable:
         self.is_occupied = False
         self.start_time = datetime.now()
         self.end_time = datetime.now()
-        self.total_minutes = 0
+        self.total_minutes = 10.0
         self.times_played = 0
+        self.cost = 0.0
 
     def rent_table(self):
         self.is_occupied = True
@@ -17,7 +18,8 @@ class PoolTable:
     def close_table(self):
         self.is_occupied = False
         self.end_time = datetime.now()
-        
+        self.cost()
+
 
     def is_available(self):
         if self.is_occupied == True:
@@ -40,7 +42,7 @@ class PoolTable:
         return min_rented
 
     def total_min_rented(self):
-        self.total_minutes += (self.hours_rented() * 60) + self.min_rented()
+        self.total_minutes += float((self.hours_rented() * 60) + self.min_rented())
         return self.total_minutes
 
     def status_return(self):
@@ -49,8 +51,15 @@ class PoolTable:
         else:
             return "Unoccupied"
 
+    def cost_calc(self):
+        if self.total_minutes > 1:
+            self.cost += (self.total_minutes / 60.0) * 30.0
+        return self.cost
+
+
     def to_dictionary(self):
         return {"Number": self.number,
         "Start Date Time": str(self.start_time),
         "End Date Time": str(self.end_time),
-        "Total Minutes Played": self.total_min_rented()}
+        "Total Minutes Played": self.total_min_rented(),
+        "Total Cost": self.cost}

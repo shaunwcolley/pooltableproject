@@ -22,9 +22,20 @@ def show_tables(array):
         else:
             print(f"Table {item_number} - {status}")
 
+def show_table_cost(array):
+    for i in range(0, len(array)):
+        table = array[i]
+        item_number = table.number
+        status = table.status_return()
+        if table.is_available() == False:
+            table.cost_calc()
+            print(f"Table {item_number} - {status} - {table.hours_rented()} hours and {table.min_rented()} minutes, current cost is ${table.cost}")
+
+
 def show_menu():
     print("Enter 1 to view all tables.")
     print("Enter 2 to rent out table.")
+    print("Enter 3 to view current cost of tables rented out.")
     print("Enter q to quit.")
 
 def rent_out_table(array):
@@ -64,6 +75,8 @@ while user_input != "q":
     elif user_input == "2":
         show_tables(pooltables)
         rent_out_table(pooltables)
+    elif user_input == "3":
+        show_table_cost(pooltables)
     elif user_input == "q":
         convert_objects(pooltables, pooltables_dictionaries)
         save_tables(pooltables_dictionaries)
